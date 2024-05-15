@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "strict": true,
+      "jsx": "preserve",
+    "target": "ESNext",
+    "lib": ["ESNext", "dom", "dom.iterable", "scriptHost"],
+      "allowImportingTsExtensions": true,
+      "allowUnreachableCode": true,
+      "moduleResolution": "node",
+      "baseUrl": ".",
+    "paths": {
+      "@/*": [
+        "resources/js/src/*"
+      ]
+    }
+  }
+}
