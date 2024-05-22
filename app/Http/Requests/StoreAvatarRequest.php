@@ -23,11 +23,7 @@ class StoreAvatarRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'id' => ['required', Rule::exists('users', 'id')],
-            'file' => ['required',
-                'file',
-                'mimes:jpeg,jpg,png,webp',
-                'max:20480',],
+            'uuid' => ['required', Rule::exists('medias', 'uuid')],
         ];
     }
 }

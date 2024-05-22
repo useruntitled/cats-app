@@ -8,11 +8,7 @@ const getPath = () => {
     return window.location.pathname;
 };
 
-export const modalManager: {
-    auth: (action: Action) => void;
-    close: () => void;
-    openProfileEdit: () => void;
-} = {
+export const modalManager = {
     close: () => {
         router.push(getPath());
     },
@@ -23,7 +19,19 @@ export const modalManager: {
             router.push(getPath() + "?modal=auth");
         }
     },
+    openByQuery: (query: string): void => {
+        router.push(getPath() + `?modal=${query}`);
+    },
     openProfileEdit: (): void => {
         router.push(getPath() + "?modal=profile-edit");
+    },
+    openEditor: (): void => {
+        router.push(getPath() + "?modal=editor");
+    },
+    openPost: (id: number): void => {
+        router.push(getPath() + `?modal=post&id=${id}`);
+    },
+    getOpenPost: (id: number) => {
+        return getPath() + `?modal=post&id=${id}`;
     },
 };

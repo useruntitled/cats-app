@@ -37,6 +37,8 @@ RUN apt-get update && apt-get install -y \
     libmagickwand-dev\
         graphviz \
         ffmpeg \
+    && docker-php-ext-configure gd --with-jpeg \
+    && docker-php-ext-install -j$(nproc) gd \
     && docker-php-ext-install zip \
     && docker-php-ext-install sockets \
     && docker-php-source delete \
@@ -44,11 +46,15 @@ RUN apt-get update && apt-get install -y \
      --install-dir=/usr/local/bin --filename=composer \
     && apt-get install -y npm
 
+RUN apt-get install -y libmagickwand-dev; \
+    pecl install imagick; \
+    docker-php-ext-enable imagick;
+
 RUN apt-get install -y libpq-dev \
     && docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
     && docker-php-ext-install pdo pdo_pgsql pgsql
 
-
+COPY ./php.ini "$PHP_INI_DIR/php.ini"
 
 CMD ["php-fpm", "-y", "/usr/local/etc/php-fpm.conf", "-R"]
 

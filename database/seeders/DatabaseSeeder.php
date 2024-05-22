@@ -2,10 +2,11 @@
 
 namespace Database\Seeders;
 
+use App\Models\Comment;
 use App\Models\Post;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use Database\Factories\PostFactory;
+use Illuminate\Database\Eloquent\Factories\Sequence;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -26,9 +27,28 @@ class DatabaseSeeder extends Seeder
             ->count(5)
             ->has(Post::factory()
                 ->count(2)
-                )
+            )
             ->create();
 
+        $postsIds = \DB::table('posts')->pluck('id')->all();
+        $usersIds = \DB::table('users')->pluck('id')->all();
+
+        foreach ($postsIds as $postId) {
+            $comment = Comment::factory()
+                ->state(new Sequence([
+                    'user_id' => $usersIds[array_rand($usersIds)],
+                    'post_id' => $postId,
+                ]))
+                ->create();
+            Comment::factory()
+                ->state(new Sequence([
+                    'user_id' => $usersIds[array_rand($usersIds)],
+                    'post_id' => $postId,
+                    'comment_id' => $comment->id,
+                    'reply_id' => $comment->id,
+                ]))
+                ->create();
+        }
 
     }
 }

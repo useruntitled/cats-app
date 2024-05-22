@@ -5,6 +5,7 @@ import Profile from "@/Pages/Profile.vue";
 
 export type AppRouteRecord = Omit<RouteRecordRaw, "name" | "children"> & {
     name: string;
+    path?: string;
     children?: readonly AppRouteRecord[];
 };
 
@@ -54,6 +55,13 @@ export const modals = [
     {
         name: "profile-edit",
         middleware: "auth",
+    },
+    {
+        name: "editor",
+        middleware: "auth",
+    },
+    {
+        name: "post",
     },
 ] as const satisfies readonly ModalRecord[];
 

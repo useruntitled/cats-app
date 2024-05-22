@@ -18,6 +18,7 @@ class UserResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'has_avatar' => $this->hasAvatar,
+            'avatar' => MediaResource::make($this->avatar),
         ];
     }
 }

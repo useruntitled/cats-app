@@ -4,6 +4,7 @@ import axios, {
     AxiosInstance,
     AxiosRequestConfig,
     AxiosResponse,
+    InternalAxiosRequestConfig,
 } from "axios";
 import { isPast, parseISO } from "date-fns";
 
@@ -21,7 +22,11 @@ export const fetchWrapper = {
 };
 
 function request(method: string) {
-    return (url: string, body: object | FormData): Promise<AxiosResponse> => {
+    return (
+        url: string,
+        body: object | FormData,
+        isFormData: boolean = false,
+    ): Promise<AxiosResponse> => {
         setAuthHeader(url);
         refreshTokenIfNeeded();
 
@@ -39,10 +44,15 @@ function request(method: string) {
             },
         );
         if (method != "GET") {
-            return axiosJwtApi.post(url, {
-                _method: method,
-                ...body,
-            });
+            if (!isFormData) {
+                return axiosJwtApi.post(url, {
+                    _method: method,
+                    ...body,
+                });
+            } else {
+                body.append("_method", method);
+                return axiosJwtApi.post(url, body);
+            }
         }
         return axiosJwtApi.get(url);
     };
@@ -53,10 +63,12 @@ function setAuthHeader(url: string = "", force: boolean = false): void {
     const isLoggedIn = !!auth?.access_token;
     const isApiUrl = url.startsWith("/api");
     if ((isLoggedIn && isApiUrl) || force) {
-        axiosJwtApi.interceptors.request.use((config: AxiosRequestConfig) => {
-            config.headers.Authorization = `Bearer ${auth.access_token}`;
-            return config;
-        });
+        axiosJwtApi.interceptors.request.use(
+            (config: InternalAxiosRequestConfig) => {
+                config.headers.Authorization = `Bearer ${auth.access_token}`;
+                return config;
+            },
+        );
     }
 }
 
@@ -72,7 +84,7 @@ function refreshTokenIfNeeded(): void {
         axiosJwtApi.post("/api/refresh").then((res: AxiosResponse) => {
             console.log(res);
             if (res.status === 200) {
-                auth.set(res.data);
+                auth.setToken(res.data);
             }
         });
     }

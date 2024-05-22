@@ -9,7 +9,7 @@
     <div
         class="dark:bg-black bg-white dark:text-white transition-all duration-400"
     >
-        <div class="min-h-screen max-w-6xl mx-auto dark:text-white">
+        <div class="min-h-screen max-w-2xl mx-auto dark:text-white">
             <div class="max-w-6xl">
                 <MessagesComponent />
             </div>
@@ -32,6 +32,8 @@ import { modalManager } from "@/utils/modalManager.ts";
 import EditProfileModal from "@/Components/Modals/EditProfileModal.vue";
 import MessagesComponent from "@/Components/Messages/MessagesComponent.vue";
 import { useAuthStore } from "@/stores/auth.store.ts";
+import EditorModal from "@/Components/Post/EditorModal.vue";
+import PostModal from "@/Components/Post/PostModal.vue";
 
 const route = useRoute();
 
@@ -40,6 +42,8 @@ const auth = useAuthStore();
 const modalsTypes: { [key: string]: any } = {
     auth: AuthModal,
     "profile-edit": EditProfileModal,
+    editor: EditorModal,
+    post: PostModal,
 };
 
 const showModal = ref(false);
@@ -51,11 +55,24 @@ const closeModal = () => {
     modalManager.close();
 };
 
+const pageFirstLoad = ref(true);
+
 watch(route, () => {
-    if (route.query?.modal != null) {
-        console.log(route.query.modal);
-        showModal.value =
-            !!modalsTypes[route.query.modal as keyof typeof modalsTypes];
+    const dod = () => {
+        if (route.query?.modal != null) {
+            console.log(route.query.modal);
+            showModal.value =
+                !!modalsTypes[route.query.modal as keyof typeof modalsTypes];
+        }
+    };
+
+    if (pageFirstLoad.value) {
+        pageFirstLoad.value = false;
+        setTimeout(() => {
+            dod();
+        }, 500);
+    } else {
+        dod();
     }
 });
 
@@ -63,7 +80,7 @@ onMounted(async () => {
     defineTheme();
 
     fetchWrapper.post("/api/me", {}).then((res) => {
-        auth.auth.user = res.data;
+        auth.setUser(res.data);
     });
 });
 

@@ -7,7 +7,7 @@ use App\Traits\HasJwtTokens;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Laravel\Sanctum\HasApiTokens;
 use Tymon\JWTAuth\Contracts\JWTSubject;
@@ -30,7 +30,7 @@ class User extends Authenticatable implements JWTSubject
     ];
 
     protected $appends = [
-      'has_avatar',
+        'has_avatar',
     ];
 
     protected function casts(): array
@@ -46,9 +46,9 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasMany(Post::class);
     }
 
-    public function avatar(): HasOne
+    public function avatar(): MorphOne
     {
-        return $this->hasOne(Media::class);
+        return $this->morphOne(Media::class, 'mediaAble');
     }
 
     protected function hasAvatar(): Attribute

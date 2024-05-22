@@ -14,8 +14,10 @@ import {
     modals,
     routes,
     TRoutesNames,
+    TRoutesPaths,
 } from "./routes";
 import { useAuthStore } from "@/stores/auth.store";
+import { modalManager } from "@/utils/modalManager.ts";
 
 const router = createRouter({
     routes: routes as unknown as RouteRecordRaw[],
@@ -46,7 +48,11 @@ router.beforeEach(
                         next(to.path);
                     }
                     if (!auth.check && modal.middleware == "auth") {
-                        next(to.path);
+                        if (modals.findIndex((obj) => obj.name == "auth")) {
+                            modalManager.openByQuery("auth");
+                        } else {
+                            next(to.path);
+                        }
                     }
                 }
             });

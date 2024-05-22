@@ -4,7 +4,7 @@
     "strict": true,
       "jsx": "preserve",
     "target": "ESNext",
-    "lib": ["ESNext", "dom", "dom.iterable", "scriptHost"],
+    "lib": ["ESNext", "dom", "dom.iterable", "scriptHost", "ES2016"],
       "allowImportingTsExtensions": true,
       "allowUnreachableCode": true,
       "moduleResolution": "node",

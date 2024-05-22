@@ -1,6 +1,6 @@
 <template>
     <modal-component :show="props.show" @close="emit('close')">
-        <modal-template>
+        <modal-template @close="emit('close')">
             <template #header>
                 <span>Auth Modal</span>
                 <span>
@@ -105,9 +105,7 @@ const login = () => {
     authStore
         .login(loginForm["email"], loginForm["password"])
         .catch((res: AxiosErrorResponse) => {
-            Object.keys(res.response.data.errors).forEach((field: string) => {
-                messagesStore.add(`Something wrong with ${field} field`);
-            });
+            messagesStore.addErrors(res);
         })
         .then((res: AxiosResponse) => {
             if (res.status === 200) {
@@ -120,9 +118,7 @@ const register = () => {
     fetchWrapper
         .post("/api/register", registerForm)
         .catch((res: AxiosErrorResponse) => {
-            Object.keys(res.response.data.errors).forEach((field: string) => {
-                messagesStore.add(`Something wrong with ${field} field`);
-            });
+            messagesStore.addErrors(res);
         })
         .then((res: AxiosResponse | void) => {
             if (res.status === 201) {

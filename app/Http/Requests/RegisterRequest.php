@@ -26,4 +26,12 @@ class RegisterRequest extends FormRequest
             'password' => 'required|confirmed',
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'email' => 'Please provide an email.',
+            'password' => 'Please provide a password.',
+        ];
+    }
 }

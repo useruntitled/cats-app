@@ -16,9 +16,11 @@ return new class extends Migration
 
             $table->foreignId('user_id')->constrained();
 
-            $table->text('title');
+            $table->char('title', 200);
 
             $table->timestamps();
+
+            $table->timestamp('published_at')->nullable()->default(null);
         });
     }
 

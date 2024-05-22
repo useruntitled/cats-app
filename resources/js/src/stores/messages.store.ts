@@ -1,4 +1,5 @@
 import { defineStore, StoreDefinition } from "pinia";
+import { AxiosErrorResponse } from "@/utils/fetch-wrapper.ts";
 
 type StateType = {
     messages: Array<Object>;
@@ -22,6 +23,19 @@ export const useMessagesStore: StoreDefinition = defineStore({
             setTimeout(() => {
                 this.delete(id);
             }, 5000);
+        },
+        addErrors(res: AxiosErrorResponse) {
+            if (res.response.data.errors) {
+                Object.keys(res.response.data.errors).forEach(
+                    (error: string) => {
+                        res.response.data.errors[error].forEach(
+                            (message: string) => {
+                                this.add(message);
+                            },
+                        );
+                    },
+                );
+            }
         },
         delete(id: number) {
             this.messages.splice(

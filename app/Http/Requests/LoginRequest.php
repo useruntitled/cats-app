@@ -26,4 +26,13 @@ class LoginRequest extends FormRequest
             'password' => 'required',
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'email' => 'Please provide an email',
+            'email.exists' => 'Something wrong with your credentials',
+            'password' => 'Please provide a password.',
+        ];
+    }
 }

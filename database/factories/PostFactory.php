@@ -18,6 +18,7 @@ class PostFactory extends Factory
     {
         return [
             'title' => fake()->words(mt_rand(1, 20), true),
+            'published_at' => now(),
         ];
     }
 }

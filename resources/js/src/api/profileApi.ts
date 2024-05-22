@@ -7,10 +7,14 @@ export const profileApi = {
             return callback(res);
         });
     },
-    uploadAvatar: (id: number, file: File): Promise<AxiosResponse> => {
-        const formData = new FormData();
-        formData.append("id", id);
-        formData.append("file", file);
-        return fetchWrapper.post(`/api/users/${id}/avatar`, formData);
+    uploadAvatar: (uuid: string): Promise<AxiosResponse> => {
+        return fetchWrapper.post(`/api/me/avatar`, {
+            uuid: uuid,
+        });
+    },
+    deleteAvatar: (uuid: string): Promise<AxiosResponse> => {
+        return fetchWrapper.delete("/api/me/avatar", {
+            uuid: uuid,
+        });
     },
 };

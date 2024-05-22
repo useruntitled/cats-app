@@ -12,4 +12,23 @@ class Media extends Model
     use HasFactory;
 
     protected $table = 'medias';
+
+    protected $primaryKey = 'uuid';
+
+    protected $casts = [
+        'uuid' => 'string',
+    ];
+
+    protected $fillable = [
+        'uuid',
+        'format',
+        'width',
+        'user_id',
+        'mediaAble_id',
+        'mediaAble_type',
+        'height',
+        'href',
+        'base64_preview',
+        'is_video',
+    ];
 }

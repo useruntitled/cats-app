@@ -10,6 +10,7 @@ export default {
         extend: {
             colors: {
                 secondary: "#0b0b0b",
+                glass: "#191919",
             },
             light: {
                 colors: {

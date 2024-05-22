@@ -3,7 +3,7 @@
         <Transition leave-active-class="duration-400">
             <div
                 v-show="show"
-                class="fixed inset-0 overflow-y-auto xs:px-0 px-4 py-6 z-[49] dark:text-white max-w-5xl mx-auto"
+                class="fixed inset-0 overflow-y-auto xs:px-0 px-4 py-6 z-[49] dark:text-white max-w-2xl mx-auto noscrollbar"
             >
                 <Transition
                     enter-active-class="ease-out duration-300"
@@ -32,7 +32,7 @@
                 >
                     <div
                         v-show="show"
-                        class="mb-6 rounded-lg shadow-glowMD overflow-hidden transform transition-all sm:w-full sm:mx-auto bg-white xl:px-40 xl:py-5 dark:bg-secondary backdrop-blur-sm bg-opacity-80 dark:bg-opacity-50"
+                        class="min-h-64 rounded-xl shadow-glowMD transform transition-all sm:w-full sm:mx-auto bg-white xl:px-4 xl:py-4 dark:bg-secondary backdrop-blur-sm bg-opacity-80 dark:bg-opacity-90"
                         :class="[maxWidthClass]"
                     >
                         <slot v-if="show" />
@@ -105,3 +105,19 @@ const maxWidthClass = computed(() => {
     } as object;
 });
 </script>
+<style scoped>
+/* хром, сафари */
+.noscrollbar::-webkit-scrollbar {
+    width: 0;
+}
+
+/* ie 10+ */
+.noscrollbar {
+    -ms-overflow-style: none;
+}
+
+/* фф (свойство больше не работает, других способов тоже нет)*/
+.noscrollbar {
+    overflow: -moz-scrollbars-none;
+}
+</style>

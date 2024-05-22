@@ -4,18 +4,19 @@
             <div class="flex items-center">
                 <app-router-link :to="{ name: '/' }">
                     <AppLogo
-                        class="w-24 h-24 stroke-black dark:fill-white dark:stroke-white stroke-6"
+                        class="w-20 h-20 stroke-black dark:fill-white dark:stroke-white stroke-6"
                     />
                 </app-router-link>
             </div>
             <div class="flex space-x-4 items-center">
+                <primary-modal-link :method="modalManager.openEditor">
+                    Create post
+                </primary-modal-link>
                 <div v-if="user">
                     <dropdown>
                         <template #trigger>
                             <button class="flex items-center space-x-2">
-                                <span class="text-xl font-bold">
-                                    {{ user.name }}
-                                </span>
+                                <span class="text-xl font-bold"> Me </span>
                                 <span>
                                     <IconChevronDown />
                                 </span>
@@ -71,6 +72,7 @@ import Dropdown from "@/Components/Dropdowns/Dropdown.vue";
 import IconChevronDown from "@/Components/Icons/IconChewronDown.vue";
 import PrimaryButton from "@/Components/Buttons/PrimaryButton.vue";
 import { modalManager } from "@/utils/modalManager.ts";
+import PrimaryModalLink from "@/Components/Links/PrimaryModalLink.vue";
 
 const showModal = () => {
     modalManager.auth("open");
