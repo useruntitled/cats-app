@@ -41,6 +41,7 @@
             Comments
         </button>
         <section class="mt-4">
+            <div v-show="isLoading">Loading..</div>
             <div v-if="posts && isPostsSection">
                 <div class="space-y-4">
                     <infinite-scroll-container @load="load">

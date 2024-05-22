@@ -3,17 +3,20 @@
     <!--    <div class="w-[90px] h-[90px] border-gray-100 border-[3.5px]"></div>-->
     <div class="relative" :style="[heightStyle]">
         <div class="relative flex justify-center w-full">
+            <video
+                class="absolute w-full h-full object-cover z-[2] top-0 max-w-none"
+                :class="[roundedClass, props.class, borderClass, props.class]"
+                :style="[heightStyle, widthStyle]"
+            >
+                <source :src="media.base64_preview" type="video/mp4" />
+            </video>
             <img
-                v-if="!isVideo"
                 class="absolute w-full h-full object-cover z-[2] top-0 max-w-none"
                 :src="media.base64_preview"
                 :class="[roundedClass, props.class, borderClass, props.class]"
                 :style="[heightStyle, widthStyle]"
                 alt=""
             />
-            <video v-else>
-                <source :src="media.base64_preview" type="video/mp4" />
-            </video>
 
             <img
                 v-if="!isVideo && media.href"
