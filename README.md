@@ -1,4 +1,4 @@
-## Cats App
+## Cats App. Multi-user media hosting about cats
 <img src="https://github.com/useruntitled/cats-app/blob/main/Doc/Screenshot_20240522_220335.png"/>
 <img src="https://github.com/useruntitled/cats-app/blob/main/Doc/Screenshot_20240522_220410.png"/>
 <img src="https://github.com/useruntitled/cats-app/blob/main/Doc/main.gif">
